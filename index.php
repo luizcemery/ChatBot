@@ -14,17 +14,22 @@
 
         <div class="chat bot">
             <div class="user-photo"><img src="img/user.png"></div>
-            <p class="chat-message">Seja Bem Vindo ao atendimento virtual. Em que posso ajudar?</p>
+            <p class="chat-message arrow_box_bot">Seja Bem Vindo ao atendimento virtual. Em que posso ajudar?</p>
         </div>
         </div>
         <div class="chat-form">
-            <textarea id="texto" name="texto"></textarea>
+            <textarea id="texto"  onKeyUp="verificaEnter(this, event)" name="texto"></textarea>
             <button id="submit">Send</button>
         </div>
     </div>
 
 <!-- Script que controla as mensagens do chat -->
     <script type="text/javascript">
+
+    function verificaEnter(t,e){
+        if (e.keyCode === 13)
+            document.getElementById("submit").click();
+    }
         $("#submit").click(function() {
             var texto = document.getElementById("texto").value;
             if (texto){
