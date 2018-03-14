@@ -67,10 +67,12 @@ body {
 .user .chat-message{
     background: #1adda4;
     order: -1;
+    word-break: break-all;
 }
 
 .bot .chat-message{
     background: #1ddced; 
+    word-break: break-all;
 }
 
 .chat-form {

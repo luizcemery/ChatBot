@@ -7,7 +7,6 @@
     
 </head>
 
-
 <body>
 
     <div class="chatbox">
@@ -20,13 +19,16 @@
             </div>
     </div>
 
+<!-- Script que controla as mensagens do chat -->
     <script type="text/javascript">
         $("#submit").click(function() {
             var texto = document.getElementById("texto").value;
-            $("<div class='chat user'><div class='user-photo'><img src='img/bot.png'></div><p class='chat-message'>" + texto + "</p></div>").appendTo('.chatlogs');
-            document.getElementById("texto").value = "";
-            var element = document.getElementById("chatlogs");
-            element.scrollTop = element.scrollHeight;
+            if (texto){
+                $("<div class='chat user'><div class='user-photo'><img src='img/bot.png'></div><p class='chat-message'>" + texto + "</p></div>").appendTo('.chatlogs');
+                document.getElementById("texto").value = "";
+                var element = document.getElementById("chatlogs");
+                element.scrollTop = element.scrollHeight;
+            }
         });
     </script>
 </body>
