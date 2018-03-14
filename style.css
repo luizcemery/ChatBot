@@ -4,7 +4,6 @@
     font-family: Tahoma, sans-serif;
     box-sizing: border-box; 
 }
-<<<<<<< HEAD
 html, body {
     margin: 0;
     height: 100%;
@@ -18,29 +17,17 @@ body {
 
 .chatbox {
     width: 500px;
-=======
-
-body {
-    background: #1ddced;
-}
-
-.chatbox {
-    width: 1000px;
->>>>>>> 0b4a6d664da119006463466c30dff4fc2a731107
     min-width: 390px;
     height: 600px;
     background: #fff;
     padding: 25px;
     margin: 20px auto;
     box-shadow: 0 3px #ccc;
-<<<<<<< HEAD
     position: fixed;
     top: 50%;
     left: 50%;
     /* bring your own prefixes */
     transform: translate(-50%, -50%);
-=======
->>>>>>> 0b4a6d664da119006463466c30dff4fc2a731107
 }
 
 .chatlogs {
@@ -63,11 +50,7 @@ body {
 .chat {
     display: flex;
     flex-flow: row wrap;
-<<<<<<< HEAD
     align-items: flex-end; 
-=======
-    align-items: flex-start; 
->>>>>>> 0b4a6d664da119006463466c30dff4fc2a731107
     margin-bottom: 10px;
 }
 
@@ -84,7 +67,6 @@ body {
 }
 
 .chat .chat-message {
-<<<<<<< HEAD
     width: 80%;
     padding: 15px;
     margin: 5px 10px 0;
@@ -92,37 +74,19 @@ body {
     color: #fff;
     font-size: 20px;
 }
-=======
-    width: 50%;
-    padding: 15px;
-    margin: 5px 10px 0;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 20px;
-}
 .user.chat {
     justify-content: flex-end;
 }
->>>>>>> 0b4a6d664da119006463466c30dff4fc2a731107
-
 .user .chat-message{
     background: #1adda4;
     order: -1;
-<<<<<<< HEAD
-    word-break: break-all;
-    border-radius: 25px;
-=======
     word-break: break-word;
->>>>>>> 0b4a6d664da119006463466c30dff4fc2a731107
+    border-radius: 25px;
 }
 
 .bot .chat-message{
     background: #1ddced; 
-<<<<<<< HEAD
-    word-break: break-all;
-=======
     word-break: break-word;
->>>>>>> 0b4a6d664da119006463466c30dff4fc2a731107
 }
 
 .chat-form {
@@ -133,11 +97,7 @@ body {
 
 .chat-form textarea{
     background: #fbfbfb;
-<<<<<<< HEAD
     width: 75%;
-=======
-    width: 85%;
->>>>>>> 0b4a6d664da119006463466c30dff4fc2a731107
     height: 50px;
     border: 2px solid #eee; 
     border-radius: 3px;
