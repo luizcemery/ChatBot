@@ -33,6 +33,7 @@
                 document.getElementById("texto").value = "";
                 var element = document.getElementById("chatlogs");
                 element.scrollTop = element.scrollHeight;
+                document.getElementById("submit").disabled = true;
             }
         });
     </script>
