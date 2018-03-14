@@ -12,6 +12,11 @@
     <div class="chatbox">
         <div id = "chatlogs" class="chatlogs">
 
+        <div class="chat bot">
+            <div class="user-photo"><img src="img/user.png"></div>
+            <p class="chat-message">Seja Bem Vindo ao atendimento virtual. Em que posso ajudar?</p>
+        </div>
+
         </div>
             <div class="chat-form">
                 <textarea id="texto" name="texto"></textarea>
