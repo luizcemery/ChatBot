@@ -2,7 +2,7 @@
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <title>Flat Design ChatBox</title>
+    <title>UFMG Atendimento</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     
 </head>
@@ -37,6 +37,8 @@
                 document.getElementById("texto").value = "";
                 var element = document.getElementById("chatlogs");
                 element.scrollTop = element.scrollHeight;
+
+                 $("<div class='chat bot'><div class='user-photo'><img src='img/bot.png'></div><p class='chat-message arrow_box_bot'> Chat Message</p></div>").appendTo('.chatlogs');
             }
         });
     </script>
