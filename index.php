@@ -14,11 +14,11 @@
 
         <div class="chat bot">
             <div class="user-photo"><img src="img/user.png"></div>
-            <p class="chat-message arrow_box_bot">Seja Bem Vindo ao atendimento virtual. Em que posso ajudar?</p>
+            <p class="chat-message arrow_box_bot">Seja bem vindo ao Atendimento Virtual UFMG. Aqui você pode tirar dúvidas relacionadas ao NIPs, conexão com a Internet e consistências relacioanadas ao Moodle. Com o que posso ajudar?</p>
         </div>
         </div>
         <div class="chat-form">
-            <textarea id="texto"  onKeyUp="verificaEnter(this, event)" name="texto"></textarea>
+            <textarea id="texto"  placeholder="Escreva alguma coisa..."  onKeyUp="verificaEnter(this, event)" name="texto"></textarea>
             <button id="submit">Send</button>
         </div>
     </div>
