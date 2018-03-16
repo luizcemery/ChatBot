@@ -18,7 +18,7 @@
         </div>
         </div>
         <div class="chat-form">
-            <textarea id="texto"  placeholder="Escreva alguma coisa..." name="texto"></textarea>
+            <input id="texto"  placeholder="Escreva alguma coisa..." onKeyUp="verificaEnter(this, event)" name="texto"></textarea>
             <button id="submit">Send</button>
         </div>
     </div>
@@ -29,21 +29,38 @@
     var msg = {"msg":"msg de teste"}
 
     function verificaEnter(t,e){
-        if (e.keyCode === 13 && document.getElementById("texto").value != '\n'){
+        if (e.keyCode === 13){
+            e.preventDefault();
             document.getElementById("submit").click();
         }
     }
         $("#submit").click(function() {
             var texto = document.getElementById("texto").value;
             if (texto != ""){
-                debugger;
+
+                 $("<div class='chat user'><div class='user-photo'><img src='static/img/bot.png'></div><p class='chat-message arrow_box'>" + texto + "</p></div>").appendTo('.chatlogs');
+                document.getElementById("texto").value = "";
+                var element = document.getElementById("chatlogs");
+                element.scrollTop = element.scrollHeight;
+                
+                var msgServer = "";
                 $.ajax({
                     url: '/receiver',
                     dataType: 'json',
                     type: 'post',
                     contentType: 'application/json',
                     data: JSON.stringify( {"direction": "user", "msg" : texto}),
+                    success: function(response){
+                        msgServer = response['msg']
+                        $("<div class='chat bot'><div class='user-photo'><img src='static/img/bot.png'></div><p class='chat-message arrow_box_bot'>" + msgServer + "</p></div>").appendTo('.chatlogs');
+                        var element = document.getElementById("chatlogs");
+                        element.scrollTop = element.scrollHeight;
+                    }
                 });
+
+                
+
+
             }
         });
     </script>
