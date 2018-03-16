@@ -27,18 +27,19 @@
     <script type="text/javascript">
 
     function verificaEnter(t,e){
-        if (e.keyCode === 13)
+        if (e.keyCode === 13 && document.getElementById("texto").value != '\n'){
             document.getElementById("submit").click();
+        }
     }
         $("#submit").click(function() {
             var texto = document.getElementById("texto").value;
-            if (texto){
+            if (texto != ""){
                 $("<div class='chat user'><div class='user-photo'><img src='img/bot.png'></div><p class='chat-message arrow_box'>" + texto + "</p></div>").appendTo('.chatlogs');
                 document.getElementById("texto").value = "";
-                var element = document.getElementById("chatlogs");
-                element.scrollTop = element.scrollHeight;
 
                  $("<div class='chat bot'><div class='user-photo'><img src='img/bot.png'></div><p class='chat-message arrow_box_bot'> Chat Message</p></div>").appendTo('.chatlogs');
+                 var element = document.getElementById("chatlogs");
+                element.scrollTop = element.scrollHeight;
             }
         });
     </script>

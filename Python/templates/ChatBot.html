@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>UFMG Atendimento</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+    
+</head>
+
+<body>
+    <div class="chatbox">
+        <div id = "chatlogs" class="chatlogs">
+
+
+        <div class="chat bot">
+            <div class="user-photo"><img src="static/img/user.png"></div>
+            <p class="chat-message arrow_box_bot">Seja bem vindo ao Atendimento Virtual UFMG. Aqui você pode tirar dúvidas relacionadas ao NIPs, conexão com a Internet e consistências relacioanadas ao Moodle. Com o que posso ajudar?</p>
+        </div>
+        </div>
+        <div class="chat-form">
+            <textarea id="texto"  placeholder="Escreva alguma coisa..." name="texto"></textarea>
+            <button id="submit">Send</button>
+        </div>
+    </div>
+
+<!-- Script que controla as mensagens do chat -->
+    <script type="text/javascript">
+
+    var msg = {"msg":"msg de teste"}
+
+    function verificaEnter(t,e){
+        if (e.keyCode === 13 && document.getElementById("texto").value != '\n'){
+            document.getElementById("submit").click();
+        }
+    }
+        $("#submit").click(function() {
+            var texto = document.getElementById("texto").value;
+            if (texto != ""){
+                debugger;
+                $.ajax({
+                    url: '/receiver',
+                    dataType: 'json',
+                    type: 'post',
+                    contentType: 'application/json',
+                    data: JSON.stringify( {"direction": "user", "msg" : texto}),
+                });
+            }
+        });
+    </script>
+</body>
+</html>
