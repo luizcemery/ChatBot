@@ -43,8 +43,8 @@ def usermsg():
         intent = response['intents'][0]['intent']
         if intent == 'saudação':
             msg = 'Olá, em que posso ajudar?'
-        elif intent == 'goodbye':
-            msg = 'See you later'
+        elif intent == 'despedida':
+            msg = 'Adeus, espero que a sua dúvida tenha sido respondida'
 
     return json.dumps({'status': 'OK', 'msg': msg})
 
