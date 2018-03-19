@@ -5,12 +5,11 @@ import sys
 from flask import Flask, render_template, request, redirect, Response
 import random, json, watson_developer_cloud
 
-class person:
+class pessoa:
     def __init__(self,no_matricula):
         self.no_matricula = no_matricula
-    
-    def get_matricula(self):
-        return self.no_matricula
+        self.nome = ''
+
 
 # Set up Conversation service.
 conversation = watson_developer_cloud.ConversationV1(
@@ -25,15 +24,6 @@ user_input = ''
 
 app = Flask(__name__)
 
-user_input = ''
-def update_context(contexto):
-    global user_context
-    user_context = contexto
-
-def get_context():
-    global user_context
-    return user_context['context']
-
 @app.route('/')
 def chat():
     response = conversation.message(
@@ -42,47 +32,59 @@ def chat():
             'text': user_input
         }
     )
-
-    update_context(response)
+    global usuario
+    global user_context
+    user_context = response
+    usuario = pessoa(0)
     return render_template('ChatBot.html')
 
 
 @app.route('/receiver', methods=['POST'])
 def usermsg():
+    
+    global usuario
     data = request.get_json()
     user_input = data['msg']
 
-    context = get_context()
+    recebe_nomatricula(user_input)
 
-    if context == 'Inconsistencia':
-        print('inconsistencia')
-    else:
-        msg = comunica_Watson(user_input)
-
+    msg = comunica_Watson(user_input)
     
     return json.dumps({'status': 'OK', 'msg': msg})
 
 
 def comunica_Watson(user_input):
+    global user_context
+
     response = conversation.message(
         workspace_id=workspace_id,
         input={
             'text': user_input
         },
-        context = get_context()
+        context = user_context['context']
     )
 
-    update_context(response['context'])
+    user_context = response
 
     print(response)
 
-    if response['intents']:
-        intent = response['intents'][0]['intent']
-        msg = response['output']['text'][0]
-    else:
-        intent = ''
-        msg = response['output']['text'][0]
+    return response['output']['text'][0]
 
-    return msg
+def recebe_nomatricula(user_input):
+
+    global usuario
+    
+    if((verifica_no(user_input)) & (len(user_input) == 10)):
+        usuario.no_matricula = int(user_input)
+        return True
+    else:
+        return False
+
+def verifica_no(n):
+    try:
+        int(n)
+        return True
+    except ValueError:
+        return False
 
 app.run()
