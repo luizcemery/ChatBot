@@ -43,15 +43,37 @@ def chat():
 def usermsg():
     
     global usuario
+    global user_context
     data = request.get_json()
     user_input = data['msg']
 
-    recebe_nomatricula(user_input)
-
-    msg = comunica_Watson(user_input)
+    entidade = ''
+    entidade_valor = ''
+    if(user_context['entities']):
+        entidade = user_context['entities'][0]['entity']
+        entidade_valor =  user_context['entities'][0]['value']
+    
+    if(entidade == 'inconsistencia'):
+        if(recebe_nomatricula(user_input)):
+            msg = verifica_cadastro()
+            comunica_Watson('')
+        else:
+            msg = 'Por favor reenvie a sua matrícula apenas com os números'
+    else:
+        msg = comunica_Watson(user_input)
+    
     
     return json.dumps({'status': 'OK', 'msg': msg})
 
+def verifica_cadastro():
+
+    global usuario
+    flag = False
+
+    if(flag):
+        print('Cadastro existente.')
+    else:
+        return 'Não foi identificado nenhum cadastro no minhaUFMG associado ao número de matrícula ' + str(usuario.no_matricula) + '. Para realizar o cadastro basta acessar o <a href="https://sistemas.ufmg.br/nip" target="_blank">link</a> e informar o seu CPF e senha provisória cadastrada para ter acesso à sua folha de NIPs'
 
 def comunica_Watson(user_input):
     global user_context
@@ -65,8 +87,6 @@ def comunica_Watson(user_input):
     )
 
     user_context = response
-
-    print(response)
 
     return response['output']['text'][0]
 
