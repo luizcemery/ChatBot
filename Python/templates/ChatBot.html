@@ -14,12 +14,12 @@
 
         <div class="chat bot">
             <div class="user-photo"><img src="static/img/user.png"></div>
-            <p class="chat-message arrow_box_bot">Seja bem vindo ao Atendimento Virtual UFMG. Aqui você pode tirar dúvidas relacionadas ao NIPs, conexão com a Internet e consistências relacioanadas ao Moodle. Com o que posso ajudar?</p>
+            <p class="chat-message arrow_box_bot">Seja bem vindo ao Atendimento Virtual UFMG. Aqui você pode tirar dúvidas relacionadas ao cadastro no minhaUFMG, ao correio eletrônico e à conexão com a Internet. Com o que posso ajudar?</p>
         </div>
         </div>
         <div class="chat-form">
             <input id="texto"  placeholder="Escreva alguma coisa..." onKeyUp="verificaEnter(this, event)" name="texto"></textarea>
-            <button id="submit">Send</button>
+            <button id="submit">Enviar</button>
         </div>
     </div>
 
@@ -41,26 +41,27 @@
                  $("<div class='chat user'><div class='user-photo'><img src='static/img/bot.png'></div><p class='chat-message arrow_box'>" + texto + "</p></div>").appendTo('.chatlogs');
                 document.getElementById("texto").value = "";
                 var element = document.getElementById("chatlogs");
+                //inserindo o loading
+                $("<div class='chat bot' id='loading'><div class='user-photo'><img src='static/img/user.png'></div><div class='user-photo'><img src='static/img/loading.gif'></div></div>").appendTo('.chatlogs');
+                
                 element.scrollTop = element.scrollHeight;
-                
-                var msgServer = "";
-                $.ajax({
-                    url: '/receiver',
-                    dataType: 'json',
-                    type: 'post',
-                    contentType: 'application/json',
-                    data: JSON.stringify( {"direction": "user", "msg" : texto}),
-                    success: function(response){
-                        msgServer = response['msg']
-                        $("<div class='chat bot'><div class='user-photo'><img src='static/img/bot.png'></div><p class='chat-message arrow_box_bot'>" + msgServer + "</p></div>").appendTo('.chatlogs');
-                        var element = document.getElementById("chatlogs");
-                        element.scrollTop = element.scrollHeight;
-                    }
-                });
-
-                
-
-
+                setTimeout(function(){
+                    var msgServer = "";
+                    $.ajax({
+                        url: '/receiver',
+                        dataType: 'json',
+                        type: 'post',
+                        contentType: 'application/json',
+                        data: JSON.stringify( {"direction": "user", "msg" : texto}),
+                        success: function(response){
+                            $("#loading").remove();
+                            msgServer = response['msg']
+                            $("<div class='chat bot'><div class='user-photo'><img src='static/img/bot.png'></div><p class='chat-message arrow_box_bot'>" + msgServer + "</p></div>").appendTo('.chatlogs');
+                            var element = document.getElementById("chatlogs");
+                            element.scrollTop = element.scrollHeight;
+                        }
+                    }); 
+                }, 1000);
             }
         });
     </script>
