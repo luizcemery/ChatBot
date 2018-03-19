@@ -5,6 +5,13 @@ import sys
 from flask import Flask, render_template, request, redirect, Response
 import random, json, watson_developer_cloud
 
+class person:
+    def __init__(self,no_matricula):
+        self.no_matricula = no_matricula
+    
+    def get_matricula(self):
+        return self.no_matricula
+
 # Set up Conversation service.
 conversation = watson_developer_cloud.ConversationV1(
   username = '2f6399a7-e75b-4018-9668-870042d1d71f', # replace with username from service key
@@ -25,7 +32,7 @@ def update_context(contexto):
 
 def get_context():
     global user_context
-    return user_context
+    return user_context['context']
 
 @app.route('/')
 def chat():
@@ -36,7 +43,7 @@ def chat():
         }
     )
 
-    update_context(response['context'])
+    update_context(response)
     return render_template('ChatBot.html')
 
 
@@ -45,6 +52,18 @@ def usermsg():
     data = request.get_json()
     user_input = data['msg']
 
+    context = get_context()
+
+    if context == 'Inconsistencia':
+        print('inconsistencia')
+    else:
+        msg = comunica_Watson(user_input)
+
+    
+    return json.dumps({'status': 'OK', 'msg': msg})
+
+
+def comunica_Watson(user_input):
     response = conversation.message(
         workspace_id=workspace_id,
         input={
@@ -55,17 +74,15 @@ def usermsg():
 
     update_context(response['context'])
 
+    print(response)
+
     if response['intents']:
-        print(response)
         intent = response['intents'][0]['intent']
         msg = response['output']['text'][0]
     else:
         intent = ''
         msg = response['output']['text'][0]
-        
-    context = response['context']
 
-    return json.dumps({'status': 'OK', 'msg': msg})
-
+    return msg
 
 app.run()
