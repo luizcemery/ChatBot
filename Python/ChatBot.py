@@ -19,18 +19,16 @@ user_input = ''
 app = Flask(__name__)
 
 user_input = ''
+def update_context(contexto):
+    global user_context
+    user_context = contexto
+
+def get_context():
+    global user_context
+    return user_context
 
 @app.route('/')
 def chat():
-    return render_template('ChatBot.html')
-
-
-@app.route('/receiver', methods=['POST'])
-def usermsg():
-    data = request.get_json()
-    user_input = data['msg']
-    print(user_input)
-
     response = conversation.message(
         workspace_id=workspace_id,
         input={
@@ -38,13 +36,34 @@ def usermsg():
         }
     )
 
-    # If an intent was detected, print it to the console.
+    update_context(response['context'])
+    return render_template('ChatBot.html')
+
+
+@app.route('/receiver', methods=['POST'])
+def usermsg():
+    data = request.get_json()
+    user_input = data['msg']
+
+    response = conversation.message(
+        workspace_id=workspace_id,
+        input={
+            'text': user_input
+        },
+        context = get_context()
+    )
+
+    update_context(response['context'])
+
     if response['intents']:
+        print(response)
         intent = response['intents'][0]['intent']
-        if intent == 'saudação':
-            msg = 'Olá, em que posso ajudar?'
-        elif intent == 'despedida':
-            msg = 'Adeus, espero que a sua dúvida tenha sido respondida'
+        msg = response['output']['text'][0]
+    else:
+        intent = ''
+        msg = response['output']['text'][0]
+        
+    context = response['context']
 
     return json.dumps({'status': 'OK', 'msg': msg})
 
